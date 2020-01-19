@@ -3,7 +3,6 @@ automatically map typed keys to strings on Linux/Mac!
 
 for this to work, you need `xdotool`. You can't get it on Windows.
 for mac, just `brew install xdotool`. For linux, just `sudo {package-manager} install xdotool`.
-for Ubuntu/Debian/Linux mint the package manager is apt-get, for Fedora it's yum, etc.
 
 Basically, what this does is when you type specific key combinations it autocorrects to the intended character. Kinda like the 'compose' key.
 
