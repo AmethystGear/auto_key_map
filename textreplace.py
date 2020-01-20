@@ -10,15 +10,34 @@ special_char = ''
 # called whenever a key is typed. Appends key to buffer, 
 # removes anything from the buffer except stuff that begins
 # with the special character.
+
+#only triggers commands when space or enter is pressed.
 def callback(e):
     global BUFFER
     global special_char
+
+    cur = ""
     if e.name == "backspace":
         BUFFER = BUFFER[:-1]
-    else:
+    elif e.name == "space":
+        cur = "space"
+    elif e.name == "enter":
+        cur = "Return"
+    elif e.name:
         BUFFER += e.name
         while BUFFER != "" and BUFFER[0] != special_char:
             BUFFER = BUFFER[1:]
+    
+    if BUFFER[1:] in d and cur != "":
+        for _ in BUFFER:
+            os.system("xdotool key BackSpace")  
+        os.system("xdotool key BackSpace")
+
+        os.system("xdotool type \""+ d[BUFFER[1:]] +"\" ")
+        os.system("xdotool key " + cur)
+        BUFFER = ""
+    elif len(BUFFER[1:]) > largestKey + 1:
+        BUFFER = ""
 
 # parse our text replacement dictionary. We assume that the special character for commands is
 # the first character on the first line, and that the remaining lines are 'key{SPACE}value' pairs.
@@ -34,17 +53,10 @@ with open("config") as f:
             (key, val) = line.split()
             if len(key) > largestKey:
                 largestKey = len(key)
-            d[key] = val
-        
-# whenever a command is detected, delete the command's text using backspace 
-# and replace it with the appropriate text that we got from our dictionary.
+            d[key] = value
+
+# call callback when keyboard pressed
 keyboard.on_release(callback)
+# wait untill program is manually terminated
 while True:
-    cur = BUFFER
-    if cur[1:] in d:
-        for _ in cur:
-            os.system("xdotool key BackSpace")    
-        os.system("xdotool type \""+ d[cur[1:]] +"\" ")
-        BUFFER = ""
-    elif len(BUFFER[1:]) > largestKey + 1:
-        BUFFER = ""
+    pass
