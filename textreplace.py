@@ -11,7 +11,7 @@ special_char = ''
 # removes anything from the buffer except stuff that begins
 # with the special character.
 
-#only triggers commands when space or enter is pressed.
+#only triggers commands when space or return is predde
 def callback(e):
     global BUFFER
     global special_char
@@ -53,7 +53,7 @@ with open("config") as f:
             (key, val) = line.split()
             if len(key) > largestKey:
                 largestKey = len(key)
-            d[key] = value
+            d[key] = val
 
 # call callback when keyboard pressed
 keyboard.on_release(callback)
