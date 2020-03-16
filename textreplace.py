@@ -12,7 +12,6 @@ special_char = ''
 # removes anything from the buffer except stuff that begins
 # with the special character.
 
-#only triggers commands when space or return is predde
 def callback(e):
     global BUFFER
     global special_char
