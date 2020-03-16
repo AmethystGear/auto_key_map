@@ -2,6 +2,7 @@
 # for mac, just 'brew install xdotool'. For linux, just sudo {package-manager} install xdotool.
 # for Ubuntu/Debian/Linux mint the package manager is apt-get, for Fedora it's yum, etc.
 import os
+import time
 import keyboard
 # stores all the keys we've hit
 BUFFER = ""
@@ -17,7 +18,7 @@ def callback(e):
     global special_char
 
     cur = ""
-    if e.name == "backspace":
+    if e.name == "backspace" and len(BUFFER) != 0:
         BUFFER = BUFFER[:-1]
     elif e.name == "space":
         cur = "space"
@@ -29,12 +30,16 @@ def callback(e):
             BUFFER = BUFFER[1:]
     
     if BUFFER[1:] in d and cur != "":
+        print(BUFFER)
+        print(d[BUFFER[1:]])
         for _ in BUFFER:
             os.system("xdotool key BackSpace")  
         os.system("xdotool key BackSpace")
-
+        time.sleep(0.02)
+        
         os.system("xdotool type \""+ d[BUFFER[1:]] +"\" ")
         os.system("xdotool key " + cur)
+        
         BUFFER = ""
     elif len(BUFFER[1:]) > largestKey + 1:
         BUFFER = ""
